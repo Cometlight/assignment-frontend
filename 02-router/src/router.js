@@ -22,7 +22,6 @@ $(document).ready(function() {
 
 function createNewEntryInRoutingTable(path, callback) {
   const regexDynamicParam = /(.*\/)(:.*)/i; // e.g. /players/:player --> (/players)/(:player)
-  // const regexDynamicParam = /(.*)\/(:.*)/i; // e.g. /players/:player --> (/players)/(:player)
   let regexResult = regexDynamicParam.exec(path);
   if (regexResult !== null) {
     // Path with dynamic parameter
@@ -55,7 +54,7 @@ function routeTo(path) {
       fallback();
     }
   } else if (routingTable.hasOwnProperty(path)) {
-    // We have a static router
+    // We have a static route
     routingTable[path].callback();
   } else {
     fallback();
@@ -77,13 +76,13 @@ function getCurrentPathFromUrl() {
 
 
 /**
- * @param {any} path e.g. /players/magnus --> http:://www.foo.com/players/magnus
+ * @param {any} path e.g. /players/magnus --> http://www.foo.com/players/magnus
  */
 function setUrl(path) {
   let regex = /^([^\/]*\/\/[^\/]+)\//i;
-  let interestingUrlPart = regex.exec(document.URL)[1];
-  let newUrl = interestingUrlPart + path;
-  // Only set it, if it's not the same already
+  let urlWithoutPath = regex.exec(document.URL)[1];
+  let newUrl = urlWithoutPath + path;
+  // Only push state if it's not the same already
   if (document.URL !== newUrl) {
     history.pushState({path}, path, newUrl);
   }
