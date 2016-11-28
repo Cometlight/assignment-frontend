@@ -37,7 +37,8 @@ export function es6() {
     for (let i = 0; i < n; i += 1) {
       sum += i;
     }
-    return i;
+    return i; // return i instead of sum, because the goal of this function is to
+              // show that i is out of scope; i is only defined inside the for loop
   }
 
   o.constants = constants;
