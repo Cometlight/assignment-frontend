@@ -11,4 +11,9 @@ export function es5() {
 }
 
 export function es6() {
+  function d({x=0, y=0, z=0} = {}) {
+    return x + y + z;
+  };
+
+  return d;
 }

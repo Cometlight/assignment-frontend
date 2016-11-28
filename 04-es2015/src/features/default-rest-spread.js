@@ -36,4 +36,29 @@ export function es5() {
 }
 
 export function es6() {
+  function defaults(x = 12) {
+    return x;
+  }
+
+  function rest(...x) {
+    return x.join(',');
+  }
+
+  function spread(arr) {
+    let x, y, z;
+    [x=0, y=0, z=0] = arr;
+    return x + y + z;
+  }
+
+  // Incoming array is spread onto variables x, y, and z
+  function spread2(x = 0, y = 0, z = 0) {
+    return x + y + z;
+  }
+
+  return {
+    defaults,
+    rest,
+    spread,
+    spread2
+  }
 }

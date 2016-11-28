@@ -27,6 +27,26 @@ export default function() {
     myMap.get('second').should.eql(2)
   })
 
-  it.skip('should show Map/Set behavior in ES6', () => {
+  it('should show Map/Set behavior in ES6', () => {
+    let mySet = new Set();
+    mySet
+      .add(1)
+      .add(2)
+      .add(3)
+
+    mySet.has(1).should.be.true
+    mySet.has(2).should.be.true
+    mySet.has(3).should.be.true
+    mySet.has(4).should.be.false
+
+    let myMap = new Map();
+    myMap.set('Hello', 'World!')
+    myMap.set('second', 2);
+    // "The keys of an Object are Strings and Symbols, whereas they can be any value for a Map, including functions, objects, and or any primitive." [src: MDN]
+    (function() {
+      myMap.set(1, 2)
+    }).should.not.throw()
+    myMap.get('Hello').should.eql('World!')
+    myMap.get('second').should.eql(2)
   })
 }
