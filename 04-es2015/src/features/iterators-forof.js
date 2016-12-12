@@ -10,4 +10,12 @@ export function es5() {
 }
 
 export function es6() {
+  let a = [1, 2, 3, 4, 5];
+  let sum = 0;
+
+  for (let number of a) {
+    sum += number;
+  }
+
+  return sum;
 }
