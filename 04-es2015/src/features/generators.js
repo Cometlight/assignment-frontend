@@ -24,6 +24,5 @@ export function es6(n) {
       yield ++cnt
     }
   }
-
   return counter(n)
 }
