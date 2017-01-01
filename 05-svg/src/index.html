@@ -119,6 +119,52 @@
         stroke-dashoffset: 3.5em;
       }
     }
+
+    .myAnimationPath {
+      stroke-dasharray: 160;
+      stroke-dashoffset: 160;
+      animation: myDash 5s infinite alternate;
+    }
+
+    @keyframes myDash {
+      70% {
+        fill: transparent;
+      }
+      to {
+        stroke-dashoffset: 0;
+        fill: red;
+      }
+    }
+
+    .button-container {
+      height: 0;
+      width: 20em;
+      padding-top: 5em;
+      position: relative;
+    }
+
+    .button-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: translate(0, 0);
+    }
+
+    #button-mover:hover {
+      fill: #5CB65C;
+    }
+
+    #button-mover:hover #button-dir-text {
+      animation: moveText 1s ease infinite;
+    }
+
+    @keyframes moveText {
+    to {
+      transform: translateX(10px);
+    }
+}
   </style>
 </head>
 <body>
@@ -143,4 +189,62 @@
 <script src="//localhost:35729/livereload.js"></script>
 <script src="/app.js"></script>
 </body>
+<script src="https://cdn.jsdelivr.net/snap.svg/0.4.1/snap.svg-min.js"></script>
+<script>
+const rightPosition = 300;
+let isActive = true;
+let rect = Snap.select("#button-mover");
+let curPosX = 0;
+
+let move = function(dx,dy) {
+  if (!isActive)
+    return;
+        curPosX = dx;
+        if (curPosX < 0) {
+          curPosX = 0;
+        } else if (curPosX > rightPosition) {
+          curPosX = rightPosition;
+        }
+        this.attr({
+                    // transform: this.data('origTransform') + (this.data('origTransform') ? "T" : "t") + [dx, 0]
+                    transform: "t" + curPosX + ", 0"
+                });
+}
+
+let start = function() {
+    if (!isActive)
+    return;
+        this.data('origTransform', this.transform().local );
+        this.attr({
+          fill: "#5CB65C"
+        });
+}
+let stop = function() {
+    if (!isActive)
+    return;
+        console.log('finished dragging');
+        console.log(curPosX);
+        if (curPosX === rightPosition) {
+          console.log("accepted");
+
+          //  $('#down').addClass('down');
+          Snap.select("#button-text-accepted").attr({
+            fill: "white"
+          });
+          Snap.select("#button-dir-text").attr({
+            fill: "transparent"
+          });
+          isActive = false;
+        } else {
+          console.log("returning");
+          // rect.addClass("button-mover-return-animation");
+          rect.animate({"transform": 0}, 1000);
+          this.attr({
+            fill: "#53A353"
+          });
+        }
+}
+
+rect.drag(move, start, stop );
+</script>
 </html>

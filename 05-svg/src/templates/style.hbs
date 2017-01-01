@@ -6,6 +6,11 @@
     <svg class="svg-style" viewBox="0 0 500 100">
       <text y="20">Lorem ipsum <tspan fill="#ff0000">dolor</tspan> sit <tspan style="font-weight: bold">amet</tspan>.</text>
     </svg>
+    <h3>And more text with style:</h3>
+    <svg viewBox="0 0 500 100">
+      <text x="10" y="10">I have the <tspan fill="red">heart</tspan> of a <tspan style="font-style: italic">lion</tspan>
+      <tspan x="10" y="30">and a lifetime ban from the Toronto zoo.</tspan></text>
+    </svg>
   </div>
 </div>
 
@@ -20,5 +25,16 @@
       </pattern>
       <rect width="400" height="100" fill="url(#pattern)"/>
     </svg>
+    <h3>And more patterns:</h3>
+    <div style="width: 20em">
+      <svg viewBox="0 0 400 400">
+        <pattern id="pattern2" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45 50 50)" fill="gold">
+          <rect width="40" height="40"/>
+          <circle r="10" cx="20" cy="20" fill="#f06"/>
+          <animateTransform attributeName="patternTransform" type="rotate" from="0 180 180" to="360 180 180" dur="10s" repeatCount="indefinite"/>
+        </pattern>
+        <rect width="400" height="400" fill="url(#pattern2)"/>
+      </svg>
+    </div>
   </div>
 </div>

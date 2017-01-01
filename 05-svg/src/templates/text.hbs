@@ -58,3 +58,40 @@
     </svg>
   </div>
 </div>
+
+<h4>More fancy text:</h4>
+<div class="row">
+  <div class="col-sm-12">
+    <div style="margin: 0 auto">
+      <svg viewBox="0 0 500 80" style="font: bold 100px sans-serif">
+
+        <pattern id="stripes" width="2" height="2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line stroke-width="1px" y2="10" stroke="#828282"/>
+        </pattern>
+
+        <linearGradient id="gradient" x1="0" y1="0" x2="100%" y2="100%">
+          <stop stop-color="#FFF2B4" offset="5%"/>
+          <stop stop-color="#9BDDFF" offset="50%"/>
+          <stop stop-color="#FF82D5" offset="85%"/>
+        </linearGradient>
+
+        <rect width="80" height="500" fill="url(#stripes)" style="transform: rotate(90deg); transform-origin: 250px 250px"/>
+        <text text-anchor="middle"
+              x="49%"
+              y="52%"
+              dy=".35em"
+              fill="url(#stripes)">
+          Colorful
+        </text>
+        <text text-anchor="middle"
+              x="50%"
+              y="50%"
+              dy=".35em"
+              fill="url(#gradient)">
+          Colorful
+        </text>
+
+      </svg>
+    </div>
+  </div>
+</div>
