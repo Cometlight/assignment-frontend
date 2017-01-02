@@ -17,7 +17,7 @@
       font-size: 1em;
     }
 
-    #pattern rect {
+    #pattern slider {
       fill: #ff0000;
     }
 
@@ -152,19 +152,28 @@
       transform: translate(0, 0);
     }
 
-    #button-mover:hover {
+    #button-slider {
+      cursor: pointer;
+    }
+
+    #button-slider:hover {
       fill: #5CB65C;
     }
 
-    #button-mover:hover #button-dir-text {
+    #button-dir-text {
       animation: moveText 1s ease infinite;
     }
 
     @keyframes moveText {
-    to {
-      transform: translateX(10px);
+      to {
+        transform: translateX(10px);
+      }
     }
-}
+
+    .button-svg > text {
+      cursor: default;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
@@ -188,63 +197,82 @@
 </div>
 <script src="//localhost:35729/livereload.js"></script>
 <script src="/app.js"></script>
-</body>
 <script src="https://cdn.jsdelivr.net/snap.svg/0.4.1/snap.svg-min.js"></script>
 <script>
-const rightPosition = 300;
-let isActive = true;
-let rect = Snap.select("#button-mover");
-let curPosX = 0;
+// If on interaction page, let's load the drag'n'drop specific javascript code
+const target = document.getElementById("app");
+const onMutation = () => {
+  if (isOnInteractionPage()) {
+    initInteractionslider();
+  }
+}
+new MutationObserver(onMutation).observe(target, {
+    childList: true
+});
 
-let move = function(dx,dy) {
-  if (!isActive)
-    return;
-        curPosX = dx;
-        if (curPosX < 0) {
-          curPosX = 0;
-        } else if (curPosX > rightPosition) {
-          curPosX = rightPosition;
-        }
-        this.attr({
-                    // transform: this.data('origTransform') + (this.data('origTransform') ? "T" : "t") + [dx, 0]
-                    transform: "t" + curPosX + ", 0"
-                });
+// Initial check, for when the page is loaded the first time
+onMutation();
+
+function isOnInteractionPage() {
+  return document.getElementById("page-interaction");
 }
 
-let start = function() {
+function initInteractionslider() {
+  const rightPosition = 300;
+  let isActive = true;
+  const slider = Snap.select("#button-slider");
+  let curPosX = 0;
+
+  let move = function(dx,dy) {
     if (!isActive)
-    return;
-        this.data('origTransform', this.transform().local );
-        this.attr({
-          fill: "#5CB65C"
-        });
-}
-let stop = function() {
+      return;
+
+    curPosX = dx;
+    if (curPosX < 0) {
+      curPosX = 0;
+    } else if (curPosX > rightPosition) {
+      curPosX = rightPosition;
+    }
+
+    this.attr({
+      transform: "t" + curPosX + ", 0"
+    });
+  }
+
+  let start = function() {
     if (!isActive)
-    return;
-        console.log('finished dragging');
-        console.log(curPosX);
-        if (curPosX === rightPosition) {
-          console.log("accepted");
+      return;
 
-          //  $('#down').addClass('down');
-          Snap.select("#button-text-accepted").attr({
-            fill: "white"
-          });
-          Snap.select("#button-dir-text").attr({
-            fill: "transparent"
-          });
-          isActive = false;
-        } else {
-          console.log("returning");
-          // rect.addClass("button-mover-return-animation");
-          rect.animate({"transform": 0}, 1000);
-          this.attr({
-            fill: "#53A353"
-          });
-        }
+    this.data('origTransform', this.transform().local);
+    this.attr({
+      fill: "#5CB65C"
+    });
+  }
+
+  let stop = function() {
+    if (!isActive)
+      return;
+
+    if (curPosX === rightPosition) {
+      // User dragged the slider all the way to the right
+      Snap.select("#button-text-accepted").attr({
+        fill: "white"
+      });
+      Snap.select("#button-dir-text").attr({
+        fill: "transparent"
+      });
+      isActive = false;
+    } else {
+      // Let's move the slider back because the user didn't drag it completely to the right side
+      slider.animate({"transform": 0}, 1000);
+      this.attr({
+        fill: "#53A353"
+      });
+    }
+  }
+
+  slider.drag(move, start, stop);
 }
-
-rect.drag(move, start, stop );
 </script>
+</body>
 </html>
